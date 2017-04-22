@@ -2,39 +2,72 @@ body {
   position: absolute;
   background-image: url("../img/board-background.jpg");
   background-color: #cccccc;
+  font-family: 'Open Sans', sans-serif;
 
 }
 
 #board {
   /*background-image: url("../img/pista1.png");*/
-  background-color: #000000;
-  position: absolute;
+
+  background-color: #227322;
+  position: relative;
   top: 50px;
   left: 50px;
   margin: 0 auto;
-  width: 1000px;
+  width: 900px;
   height: 600px;
 
 }
 
+#scoreboard {
+  font-size: 36px;
+  display: inline;
+  margin-left: 200px;
+}
+
+#start {
+  color: #fff;
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
+  width: 200px;
+  height: 40px;
+  background-color: #FF5D73;
+
+  border: 0px;
+  border-radius: 30px;
+  margin: 10px 5px 10px 100px;
+}
+
 .paddle {
   position: absolute;
-  width: 5px;
+  width: 10px;
   height: 50px;
 }
 
 #paddle1 {
-  color: green;
+  background-color: blue;
+  left:5px;
+  top: 200px;
 }
 
 #paddle2 {
-  color: red;
+  background-color: red;
+  left: 885px;
+  top: 200px;
 }
 
 #net {
 }
 
 #ball {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  border-radius: 100%;
+  left: 440px;
+  top: 230px;
 }
 
 .score span {
