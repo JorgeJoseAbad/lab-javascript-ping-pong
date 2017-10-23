@@ -13,32 +13,33 @@ function Ball(x,y, paddle1, paddle2) {
 //must obviously go in opposite direction of hit, choose random x, gives our y
 Ball.prototype.randomDirection = function() {
   var c = 12;       //ball speed, pretty much. pixels moved per intervalTime
-    var negOrPos = Math.random() >= 0.5 ? 1 : -1;
+  var negOrPos;
+    negOrPos = Math.random() >= 0.5 ? 2 : -2;
     // should return number between -2 and 2, inclusive
     this.xChange = Math.round( Math.random() * c) * negOrPos;
-    negOrPos = Math.random() >= 0.5 ? 1 : -1;
+    negOrPos = Math.random() >= 0.5 ? 2 : -2;
     // should return number based on hypotenuse.
     this.yChange = Math.round( Math.sqrt((Math.pow(c, 2) - Math.pow(this.xChange, 2)) ) * negOrPos);
 
     while (this.xChange === 0 || this.yChange === 0){
-      negOrPos = Math.random() >= 0.5 ? 1 : -1;
+      negOrPos = Math.random() >= 0.5 ? 2 : -2;
       // should return number between -2 and 2, inclusive
       this.xChange = Math.round( Math.random() * c) * negOrPos;
-      negOrPos = Math.random() >= 0.5 ? 1 : -1;
+      negOrPos = Math.random() >= 0.5 ? 2 : -2;
       // should return number based on hypotenuse.
       this.yChange = Math.round( Math.sqrt((Math.pow(c, 2) - Math.pow(this.xChange, 2)) ) * negOrPos);
     }
 };
 
 Ball.prototype.move = function(){
-  this.xPos += this.xChange;
+    this.xPos += this.xChange;
     this.yPos += this.yChange;
 
     //console.log("before check. ball.yPos = ");
     //see if it hits anything.
     // check if it hit top or bottom wall.
     if (this.yPos <= 0 || this.yPos >= BOARD_HEIGHT - BALL_DIAMETER) {
-        this.yChange *= -1;
+        this.yChange *= -1; //multiples x-1 to change sign of movement
     }
 
     // check if it hit paddle by calling paddle.hitBall();

@@ -5,58 +5,59 @@ var BOARD_WIDTH = 900; // should keep track of styles values
 var PADDLE_HEIGHT = 100; // should keep track of styles values
 var PADDLE_WIDTH = 20;
 var BALL_DIAMETER = 20; // ''
-var INTERVAL_TIME = 25;
+var INTERVAL_TIME = 50;
 
 var board = new Board();
 
 
 $('#start').on('click', function(){
   board.start();
-  activatePaddle2();
-  var game = setInterval(updateState, intervalTime);
+  //activatePaddle2();
+  var game = setInterval(updateState, INTERVAL_TIME);
   renderGame();
+  updateState();
 });
 
 //change ball position, change paddle2 positions.
 //then call renderGame
 function updateState(){
-  //  update paddle2 position;
+    //  update paddle2 position;
 
-  /*  We'll actually call activatePaddle2 because it has differetn speed than
-      those we are using in moveUp moveDown from ball class
+    /*  We'll actually call activatePaddle2 because it has differetn speed than
+        those we are using in moveUp moveDown from ball class
 
-  if (ball.yPos > paddle2.yPos){
-    //paddle2 must go down
-    paddle2.moveDown();
-  } else {
-    //paddle2 must go up
-    paddle2.moveUp();
-  }
-  */
-
-  activatePaddle2(board.ball.xPos, board.ball.yPos);
-
-  //  update ball position;
-  board.ball.move();
-
-  // then check if someone scored.
-  if (board.ball.pointScored() && board.ball.winner()){
-    var winner = board.ball.winner();
-    if (winner === board.paddle1){
-      board.homeScore += 1;
+    if (ball.yPos > paddle2.yPos){
+      //paddle2 must go down
+      paddle2.moveDown();
     } else {
-      board.awayScore += 1;
+      //paddle2 must go up
+      paddle2.moveUp();
+    }
+    */
+
+    activatePaddle2(board.ball.xPos, board.ball.yPos);
+
+    //  update ball position;
+    board.ball.move();
+
+    // then check if someone scored.
+    if (board.ball.pointScored() && board.ball.winner()){
+      var winner = board.ball.winner();
+      if (winner === board.paddle1){
+        board.homeScore += 1;
+      } else {
+        board.awayScore += 1;
+      }
+
+      board.restart();
     }
 
-    board.restart();
-  }
+    // check if game is over?           //render score before this?
+    if (board.gameOver()) board.stop(this.game);
 
-  // check if game is over?           //render score before this?
-  if (board.gameOver()) board.stop();
-
-  //render all
-  //paddle1, paddle2, ball, score   --- Maybe we shouldn't render paddle1 twice...
-  renderGame();
+    //render all
+    //paddle1, paddle2, ball, score   --- Maybe we shouldn't render paddle1 twice...
+    renderGame();
 }
 
 $(document).on('keydown', function(e){
@@ -86,6 +87,7 @@ $(document).on('keydown', function(e){
 
 
   function activatePaddle2(x, y) {
+
     if (y + BALL_DIAMETER/2 > board.paddle2.yPos + PADDLE_HEIGHT/2){
       //paddle2 must go down
       board.paddle2.yPos = (board.paddle2.yPos + PADDLE2_SPEED >= BOARD_HEIGHT - PADDLE_HEIGHT) ?
