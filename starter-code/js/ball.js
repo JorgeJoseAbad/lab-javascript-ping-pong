@@ -13,6 +13,7 @@ function Ball(x,y, paddle1, paddle2) {
 //must obviously go in opposite direction of hit, choose random x, gives our y
 Ball.prototype.randomDirection = function() {
   var c = 12;       //ball speed, pretty much. pixels moved per intervalTime
+  debugger;
   var negOrPos;
     negOrPos = Math.random() >= 0.5 ? 2 : -2;
     // should return number between -2 and 2, inclusive
