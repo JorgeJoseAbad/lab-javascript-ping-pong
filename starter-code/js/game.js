@@ -9,6 +9,8 @@
     this.BALL_DIAMETER = 20; // ''
     this.INTERVAL_TIME = 50;
 
+    this.interval;
+
     this.board = new Board();
 
     this.startGame = function(){
@@ -20,30 +22,16 @@
         that.renderGame();
         that.board.start();
         //that.updateState();
-        setInterval(that.updateState, that.INTERVAL_TIME);
+        that.interval = setInterval(that.updateState, that.INTERVAL_TIME);
       });
     }
-
   }
-
 
 
 //change ball position, change paddle2 positions.
 //then call renderGame
 Game.prototype.updateState=function(){
-    //  update paddle2 position;
 
-    /*  We'll actually call activatePaddle2 because it has differetn speed than
-        those we are using in moveUp moveDown from ball class
-
-    if (ball.yPos > paddle2.yPos){
-      //paddle2 must go down
-      paddle2.moveDown();
-    } else {
-      //paddle2 must go up
-      paddle2.moveUp();
-    }
-      */
     game.activatePaddle2(game.board.ball.xPos, game.board.ball.yPos);
 
     //  update ball position;
@@ -61,7 +49,9 @@ Game.prototype.updateState=function(){
       game.board.restart();
     }
 
-    // check if game is over?           //render score before this?
+    // check if game is over?
+         //render score before this?
+
     if (game.board.gameOver()) {
       game.board.stop(this.game);
     }

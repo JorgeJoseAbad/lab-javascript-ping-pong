@@ -11,7 +11,6 @@ Paddle.prototype.restart = function(x,y){
 //BALL_DIAMETER = 20; BALL_DIAMETER = 20;PADDLE1_SPEED = 20; ??
 //move up 20 px, except if it's under 20 to origin (x,y)=(0,0)
 Paddle.prototype.moveUp = function(){
-  debugger;
   this.yPos = (this.yPos - 20 < 0) ? 0 : this.yPos - 20;
   return this.yPos;
 };
@@ -19,8 +18,7 @@ Paddle.prototype.moveUp = function(){
 //PADDLE_HEIGHT = 100;BOARD_HEIGHT = 500;
 //move down 20 px, except if lower part of paddle is under 20 to y limit (x,y)=(0,500)
 Paddle.prototype.moveDown = function(){
-  debugger;
-  this.yPos = (this.yPos + 20 > game.BOARD_HEIGHT - game.PADDLE_HEIGHT) ?
+  this.yPos = (this.yPos +12 > game.BOARD_HEIGHT - game.PADDLE_HEIGHT) ?
     game.BOARD_HEIGHT - game.PADDLE_HEIGHT : this.yPos + 20;
     return this.yPos;
 };

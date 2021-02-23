@@ -13,7 +13,7 @@ function Ball(x,y, paddle1, paddle2) {
 //must obviously go in opposite direction of hit, choose random x, gives our y
 Ball.prototype.randomDirection = function() {
   var c = 12;       //ball speed, pretty much. pixels moved per intervalTime
-debugger;
+
   var negOrPos;
     negOrPos = Math.random() >= 0.5 ? 1 : -1;
     // should return number between -2 and 2, inclusive
@@ -41,7 +41,6 @@ Ball.prototype.move = function(){
     //console.log("before check. ball.yPos = ");
     //see if it hits anything.
     // check if it hit top or bottom wall.
-    debugger;
     if (this.yPos <= 0 || this.yPos >= game.BOARD_HEIGHT - game.BALL_DIAMETER) {
         this.yChange *= -1; //multiples x-1 to change sign of movement
     }

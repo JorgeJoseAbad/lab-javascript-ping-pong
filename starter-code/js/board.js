@@ -22,8 +22,8 @@ Board.prototype.checkGame = function(){
 Board.prototype.stop = function(game){
   //probably should render atleast the score here as I'm not rendering anything
   //after we find game is over.
-
-  clearInterval(this.game);
+  debugger;
+  clearInterval(game.interval);
   alert("game is stopped");
  };
 
@@ -34,5 +34,5 @@ Board.prototype.restart = function(){
 };
 
 Board.prototype.gameOver = function(){
-  return (this.homeScore === 7 || this.awayScore === 7);
+  return (this.homeScore === 2 || this.awayScore === 2);
 };
