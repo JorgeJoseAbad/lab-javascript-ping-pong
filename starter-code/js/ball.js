@@ -13,23 +13,25 @@ function Ball(x,y, paddle1, paddle2) {
 //must obviously go in opposite direction of hit, choose random x, gives our y
 Ball.prototype.randomDirection = function() {
   var c = 12;       //ball speed, pretty much. pixels moved per intervalTime
-  debugger;
+debugger;
   var negOrPos;
-    negOrPos = Math.random() >= 0.5 ? 2 : -2;
+    negOrPos = Math.random() >= 0.5 ? 1 : -1;
     // should return number between -2 and 2, inclusive
     this.xChange = Math.round( Math.random() * c) * negOrPos;
-    negOrPos = Math.random() >= 0.5 ? 2 : -2;
+    negOrPos = Math.random() >= 0.5 ? 1 : -1;
     // should return number based on hypotenuse.
-    this.yChange = Math.round( Math.sqrt((Math.pow(c, 2) - Math.pow(this.xChange, 2)) ) * negOrPos);
+    this.yChange = Math.round( Math.sqrt( Math.pow(c, 2) - Math.pow(this.xChange, 2) )) * negOrPos;
 
     while (this.xChange === 0 || this.yChange === 0){
-      negOrPos = Math.random() >= 0.5 ? 2 : -2;
+      negOrPos = Math.random() >= 0.5 ? 1 : -1;
       // should return number between -2 and 2, inclusive
       this.xChange = Math.round( Math.random() * c) * negOrPos;
-      negOrPos = Math.random() >= 0.5 ? 2 : -2;
+      negOrPos = Math.random() >= 0.5 ? 1 : -1;
       // should return number based on hypotenuse.
       this.yChange = Math.round( Math.sqrt((Math.pow(c, 2) - Math.pow(this.xChange, 2)) ) * negOrPos);
     }
+    console.log(this.xChange);
+    console.log(this.yChange);
 };
 
 Ball.prototype.move = function(){
@@ -39,7 +41,8 @@ Ball.prototype.move = function(){
     //console.log("before check. ball.yPos = ");
     //see if it hits anything.
     // check if it hit top or bottom wall.
-    if (this.yPos <= 0 || this.yPos >= BOARD_HEIGHT - BALL_DIAMETER) {
+    debugger;
+    if (this.yPos <= 0 || this.yPos >= game.BOARD_HEIGHT - game.BALL_DIAMETER) {
         this.yChange *= -1; //multiples x-1 to change sign of movement
     }
 
@@ -60,7 +63,7 @@ Ball.prototype.pointScored = function(){
         //paddle2 scored
         this.scoringPaddle = this.paddle2;
         return true;
-    } else if (this.xPos >= BOARD_WIDTH - BALL_DIAMETER) {
+    } else if (this.xPos >= game.BOARD_WIDTH - game.BALL_DIAMETER) {
         //paddle1 scored
         this.scoringPaddle = this.paddle1;
         return true;

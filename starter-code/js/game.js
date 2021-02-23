@@ -1,26 +1,36 @@
-var PADDLE1_SPEED = 20;
-var PADDLE2_SPEED = 4;
-var BOARD_HEIGHT = 500; // should keep track of styles values
-var BOARD_WIDTH = 900; // should keep track of styles values
-var PADDLE_HEIGHT = 100; // should keep track of styles values
-var PADDLE_WIDTH = 20;
-var BALL_DIAMETER = 20; // ''
-var INTERVAL_TIME = 50;
 
-var board = new Board();
+  function Game(){
+    this.PADDLE1_SPEED = 20;
+    this.PADDLE2_SPEED = 4;
+    this.BOARD_HEIGHT = 500; // should keep track of styles values
+    this.BOARD_WIDTH = 900; // should keep track of styles values
+    this.PADDLE_HEIGHT = 100; // should keep track of styles values
+    this.PADDLE_WIDTH = 20;
+    this.BALL_DIAMETER = 20; // ''
+    this.INTERVAL_TIME = 50;
+
+    this.board = new Board();
+
+    this.startGame = function(){
+      var that=this;
+      $('#start').on('click', function(){
+        //that.activatePaddle2();
+        that.assignControlsToKeys();
+
+        that.renderGame();
+        that.board.start();
+        //that.updateState();
+        setInterval(that.updateState, that.INTERVAL_TIME);
+      });
+    }
+
+  }
 
 
-$('#start').on('click', function(){
-  board.start();
-  //activatePaddle2();
-  var game = setInterval(updateState, INTERVAL_TIME);
-  renderGame();
-  updateState();
-});
 
 //change ball position, change paddle2 positions.
 //then call renderGame
-function updateState(){
+Game.prototype.updateState=function(){
     //  update paddle2 position;
 
     /*  We'll actually call activatePaddle2 because it has differetn speed than
@@ -33,95 +43,100 @@ function updateState(){
       //paddle2 must go up
       paddle2.moveUp();
     }
-    */
-
-    activatePaddle2(board.ball.xPos, board.ball.yPos);
+      */
+    game.activatePaddle2(game.board.ball.xPos, game.board.ball.yPos);
 
     //  update ball position;
-    board.ball.move();
+    game.board.ball.move();
 
     // then check if someone scored.
-    if (board.ball.pointScored() && board.ball.winner()){
-      var winner = board.ball.winner();
-      if (winner === board.paddle1){
-        board.homeScore += 1;
+    if (game.board.ball.pointScored() && game.board.ball.winner()){
+      var winner = game.board.ball.winner();
+      if (winner === game.board.paddle1){
+        game.board.homeScore += 1;
       } else {
-        board.awayScore += 1;
+        game.board.awayScore += 1;
       }
 
-      board.restart();
+      game.board.restart();
     }
 
     // check if game is over?           //render score before this?
-    if (board.gameOver()) board.stop(this.game);
+    if (game.board.gameOver()) {
+      game.board.stop(this.game);
+    }
 
     //render all
     //paddle1, paddle2, ball, score   --- Maybe we shouldn't render paddle1 twice...
-    renderGame();
+    game.renderGame();
 }
 
-$(document).on('keydown', function(e){
-  //change paddle1 positions. update coordinates for paddle1 here. Also render it!
-  var key = e.which;  //key38 is up, key 40 is down
-  var paddle1 = board.paddle1;
+Game.prototype.assignControlsToKeys = function(){
 
-  //console.log(typeof e.which);
-  //console.log(e.which);
+  $('body').on('keydown', function(e){
+    //change paddle1 positions. update coordinates for paddle1 here. Also render it!
+    var key = e.which;  //key38 is up, key 40 is down
+    var paddle1 = game.board.paddle1;
 
-  if (key === 38){
-    e.preventDefault();
-    //move paddle1 up
-    paddle1.moveUp();
-    //paddle1.yPos = (paddle1.yPos - 20 < 0) ? 0 : paddle1.yPos - 20;
-  } else if (key === 40){
-    e.preventDefault();
-    //move paddle1 down
-    paddle1.moveDown();
-    //paddle1.yPos = (paddle1.yPos + 20 > BOARD_HEIGHT - PADDLE_HEIGHT) ?
-    //  BOARD_HEIGHT - PADDLE_HEIGHT : paddle1.yPos + 20;
-  }
+    if (key === 38){
+      e.preventDefault();
+      //move paddle1 up
+      paddle1.yPos = paddle1.moveUp();
+      //paddle1.yPos = (paddle1.yPos - 20 < 0) ? 0 : paddle1.yPos - 20;
+    } else if (key === 40){
+      e.preventDefault();
+      //move paddle1 down
+      paddle1.yPos = paddle1.moveDown();
+      //paddle1.yPos = (paddle1.yPos + 20 > BOARD_HEIGHT - PADDLE_HEIGHT) ?
+      //  BOARD_HEIGHT - PADDLE_HEIGHT : paddle1.yPos + 20;
+    }
 
-  //render paddle
-  $('#paddle1').css('top', paddle1.yPos);
-});
+    //render paddle
+    $('#paddle1').css('top', game.board.paddle1.yPos);
+  });
+};
 
 
-  function activatePaddle2(x, y) {
 
-    if (y + BALL_DIAMETER/2 > board.paddle2.yPos + PADDLE_HEIGHT/2){
+  Game.prototype.activatePaddle2 = function(x, y) {
+
+    if (y + this.BALL_DIAMETER/2 > this.board.paddle2.yPos + this.PADDLE_HEIGHT/2){
       //paddle2 must go down
-      board.paddle2.yPos = (board.paddle2.yPos + PADDLE2_SPEED >= BOARD_HEIGHT - PADDLE_HEIGHT) ?
-      BOARD_HEIGHT - PADDLE_HEIGHT : board.paddle2.yPos + PADDLE2_SPEED;
+      this.board.paddle2.yPos = (this.board.paddle2.yPos + this.PADDLE2_SPEED >= this.BOARD_HEIGHT - this.PADDLE_HEIGHT) ?
+      this.BOARD_HEIGHT - this.PADDLE_HEIGHT : this.board.paddle2.yPos + this.PADDLE2_SPEED;
 
     } else {
       //paddle2 must go up
-      board.paddle2.yPos = (board.paddle2.yPos - PADDLE2_SPEED < 0) ?
-        0 : board.paddle2.yPos - PADDLE2_SPEED;
+      this.board.paddle2.yPos = (this.board.paddle2.yPos - this.PADDLE2_SPEED < 0) ?
+        0 : this.board.paddle2.yPos - this.PADDLE2_SPEED;
     }
 }
 
 
-function renderGame(){
-  renderScore();
-  renderPaddle();
-  renderBall();
+Game.prototype.renderGame = function (){
+  this.renderScore();
+  this.renderPaddle();
+  this.renderBall();
 }
 
-function renderScore(){
+Game.prototype.renderScore = function(){
   var homeScoreSpan = $('#home-score');
   var awayScoreSpan = $('#away-score');
-  homeScoreSpan.html(board.homeScore);
-  awayScoreSpan.html(board.awayScore);
+  homeScoreSpan.html(game.board.homeScore);
+  awayScoreSpan.html(game.board.awayScore);
 }
 
-function renderBall(){
+Game.prototype.renderBall = function(){
   var ballDiv = $('#ball');
-  ballDiv.css('left', board.ball.xPos + 'px');
-  ballDiv.css('top', board.ball.yPos + 'px');
+  ballDiv.css('left', game.board.ball.xPos + 'px');
+  ballDiv.css('top', game.board.ball.yPos + 'px');
 }
 
-function renderPaddle(){
+Game.prototype.renderPaddle = function(){
   var paddle2Div = $('#paddle2');
-  paddle2Div.css('left', board.paddle2.xPos + 'px');
-  paddle2Div.css('top', board.paddle2.yPos + 'px');
+  paddle2Div.css('left', game.board.paddle2.xPos + 'px');
+  paddle2Div.css('top', game.board.paddle2.yPos + 'px');
 }
+
+var game = new Game();
+game.startGame();

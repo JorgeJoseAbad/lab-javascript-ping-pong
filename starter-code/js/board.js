@@ -11,6 +11,7 @@ function Board() {
 //set score to 0-0, put everyone in initial places,
 //assign speed functions
 Board.prototype.start = function(){
+
   this.ball.randomDirection();
 };
 
@@ -21,7 +22,8 @@ Board.prototype.checkGame = function(){
 Board.prototype.stop = function(game){
   //probably should render atleast the score here as I'm not rendering anything
   //after we find game is over.
-  clearInterval(game);
+
+  clearInterval(this.game);
   alert("game is stopped");
  };
 
