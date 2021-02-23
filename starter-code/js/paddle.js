@@ -18,8 +18,9 @@ Paddle.prototype.moveUp = function(){
 //PADDLE_HEIGHT = 100;BOARD_HEIGHT = 500;
 //move down 20 px, except if lower part of paddle is under 20 to y limit (x,y)=(0,500)
 Paddle.prototype.moveDown = function(){
-  this.yPos = (this.yPos +12 > game.BOARD_HEIGHT - game.PADDLE_HEIGHT) ?
-    game.BOARD_HEIGHT - game.PADDLE_HEIGHT : this.yPos + 20;
+  //estos valores de ajuste habría que revisarlos para que fueran mas elegantes
+  this.yPos = (this.yPos > game.BOARD_HEIGHT-game.PADDLE_HEIGHT + 30) ?
+    game.BOARD_HEIGHT - game.PADDLE_HEIGHT + 50 : this.yPos + 20;
     return this.yPos;
 };
 

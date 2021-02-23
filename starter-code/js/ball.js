@@ -30,8 +30,6 @@ Ball.prototype.randomDirection = function() {
       // should return number based on hypotenuse.
       this.yChange = Math.round( Math.sqrt((Math.pow(c, 2) - Math.pow(this.xChange, 2)) ) * negOrPos);
     }
-    console.log(this.xChange);
-    console.log(this.yChange);
 };
 
 Ball.prototype.move = function(){

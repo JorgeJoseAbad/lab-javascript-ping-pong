@@ -34,5 +34,5 @@ Board.prototype.restart = function(){
 };
 
 Board.prototype.gameOver = function(){
-  return (this.homeScore === 2 || this.awayScore === 2);
+  return (this.homeScore === 7 || this.awayScore === 7);
 };
