@@ -1,6 +1,7 @@
-function Paddle(x,y) {
+function Paddle(x,y,name) {
   this.xPos = x;
   this.yPos = y;
+  this.name = name;
 }
 
 Paddle.prototype.restart = function(x,y){

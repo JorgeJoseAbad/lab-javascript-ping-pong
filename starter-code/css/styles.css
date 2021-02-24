@@ -44,6 +44,17 @@ body {
   margin-right: 50px;
 }
 
+#winner{
+  position: absolute;
+  width: 70%;
+  margin-left: 300px;
+  color: blue;
+  font-style: italic;
+  top : 260px;
+  font-size: 56px;
+  z-index: 100;
+}
+
 
 #start {
   color: #fff;

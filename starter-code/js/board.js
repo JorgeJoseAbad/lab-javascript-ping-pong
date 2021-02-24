@@ -1,7 +1,7 @@
 function Board() {
 
-  this.paddle1 = new Paddle(0, 200);
-  this.paddle2 = new Paddle(990, 200);
+  this.paddle1 = new Paddle(0, 200, "paddle1");
+  this.paddle2 = new Paddle(990, 200, "paddle2");
   this.ball    = new Ball(490, 280, this.paddle1, this.paddle2);
   this.homeScore = 0;
   this.awayScore = 0;
@@ -33,5 +33,7 @@ Board.prototype.restart = function(){
 };
 
 Board.prototype.gameOver = function(){
-  return (this.homeScore === 7 || this.awayScore === 7);
+  if (this.homeScore !== 7 && this.awayScore !== 7) return false;
+  else if (this.homeScore === 7) return this.paddle1.name;
+  else if (this.awayScore === 7) return this.paddle2.name;
 };

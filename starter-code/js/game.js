@@ -10,6 +10,7 @@
     this.INTERVAL_TIME = 50;
 
     this.interval;
+    this.winner;
 
     this.board = new Board();
 
@@ -50,11 +51,11 @@ Game.prototype.updateState=function(){
     }
 
     // check if game is over?
-         //render score before this?
-
-    if (game.board.gameOver()) {
+    //render score before this?
+    game.winner = game.board.gameOver();
+    if (game.winner !== false) {
       $('#scoreboard').addClass('final');
-      
+      $('#winner').html(`<b> And the winner is: ${game.winner}</b>`);
       game.board.stop(this.game);
     }
 
