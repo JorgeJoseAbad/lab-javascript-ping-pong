@@ -75,8 +75,8 @@ Ball.prototype.pointScored = function(){
 };
 
 Ball.prototype.restart = function(){
-  this.xPos = 440;
-    this.yPos = 230;
+  this.xPos = 490;//540;
+    this.yPos = 280;// 280
     this.scoringPaddle = null;
     this.randomDirection();
 };

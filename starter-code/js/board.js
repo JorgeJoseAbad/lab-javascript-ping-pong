@@ -1,9 +1,8 @@
 function Board() {
-  //this.canvas=[];
-  //console.log()
+
   this.paddle1 = new Paddle(0, 200);
-  this.paddle2 = new Paddle(880, 200);
-  this.ball = new Ball(440, 230, this.paddle1, this.paddle2);
+  this.paddle2 = new Paddle(990, 200);
+  this.ball    = new Ball(490, 280, this.paddle1, this.paddle2);
   this.homeScore = 0;
   this.awayScore = 0;
 }
@@ -11,11 +10,11 @@ function Board() {
 //set score to 0-0, put everyone in initial places,
 //assign speed functions
 Board.prototype.start = function(){
-
   this.ball.randomDirection();
 };
 
 Board.prototype.checkGame = function(){
+  //quedo sin funcionalidad
 };
 
 //stop
@@ -30,7 +29,7 @@ Board.prototype.stop = function(game){
 Board.prototype.restart = function(){
   this.ball.restart();
   this.paddle1.restart(0, 200);
-  this.paddle2.restart(880, 200);
+  this.paddle2.restart(990, 200);
 };
 
 Board.prototype.gameOver = function(){

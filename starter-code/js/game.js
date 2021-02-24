@@ -2,8 +2,8 @@
   function Game(){
     this.PADDLE1_SPEED = 20;
     this.PADDLE2_SPEED = 4;
-    this.BOARD_HEIGHT = 500; // should keep track of styles values
-    this.BOARD_WIDTH = 900; // should keep track of styles values
+    this.BOARD_HEIGHT = 600; // 500 should keep track of styles values
+    this.BOARD_WIDTH = 1000; // 900 should keep track of styles values
     this.PADDLE_HEIGHT = 100; // should keep track of styles values
     this.PADDLE_WIDTH = 20;
     this.BALL_DIAMETER = 20; // ''
@@ -16,15 +16,14 @@
     this.startGame = function(){
       var that=this;
       $('#start').on('click', function(){
-        //that.activatePaddle2();
-        that.assignControlsToKeys();
 
+        that.assignControlsToKeys();
         that.renderGame();
         that.board.start();
-        //that.updateState();
         that.interval = setInterval(that.updateState, that.INTERVAL_TIME);
       });
     }
+
   }
 
 
@@ -39,6 +38,7 @@ Game.prototype.updateState=function(){
 
     // then check if someone scored.
     if (game.board.ball.pointScored() && game.board.ball.winner()){
+
       var winner = game.board.ball.winner();
       if (winner === game.board.paddle1){
         game.board.homeScore += 1;
@@ -53,6 +53,8 @@ Game.prototype.updateState=function(){
          //render score before this?
 
     if (game.board.gameOver()) {
+      $('#scoreboard').addClass('final');
+      
       game.board.stop(this.game);
     }
 
@@ -88,18 +90,17 @@ Game.prototype.assignControlsToKeys = function(){
 
 
 
-  Game.prototype.activatePaddle2 = function(x, y) {
+Game.prototype.activatePaddle2 = function(x, y) {
+  if (y + this.BALL_DIAMETER/2 > this.board.paddle2.yPos + this.PADDLE_HEIGHT/2){
+    //paddle2 must go down
+    this.board.paddle2.yPos = (this.board.paddle2.yPos + this.PADDLE2_SPEED >= this.BOARD_HEIGHT - this.PADDLE_HEIGHT) ?
+    this.BOARD_HEIGHT - this.PADDLE_HEIGHT : this.board.paddle2.yPos + this.PADDLE2_SPEED;
 
-    if (y + this.BALL_DIAMETER/2 > this.board.paddle2.yPos + this.PADDLE_HEIGHT/2){
-      //paddle2 must go down
-      this.board.paddle2.yPos = (this.board.paddle2.yPos + this.PADDLE2_SPEED >= this.BOARD_HEIGHT - this.PADDLE_HEIGHT) ?
-      this.BOARD_HEIGHT - this.PADDLE_HEIGHT : this.board.paddle2.yPos + this.PADDLE2_SPEED;
-
-    } else {
-      //paddle2 must go up
-      this.board.paddle2.yPos = (this.board.paddle2.yPos - this.PADDLE2_SPEED < 0) ?
-        0 : this.board.paddle2.yPos - this.PADDLE2_SPEED;
-    }
+  } else {
+    //paddle2 must go up
+    this.board.paddle2.yPos = (this.board.paddle2.yPos - this.PADDLE2_SPEED < 0) ?
+      0 : this.board.paddle2.yPos - this.PADDLE2_SPEED;
+  }
 }
 
 
