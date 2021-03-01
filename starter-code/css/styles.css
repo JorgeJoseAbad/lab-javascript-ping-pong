@@ -55,6 +55,9 @@ body {
   z-index: 100;
 }
 
+#winner.hide {
+}
+
 
 #start {
   color: #fff;
@@ -106,7 +109,6 @@ body {
 }
 
 
-
 .left {
 }
 
@@ -116,11 +118,7 @@ body {
 button {
 }
 
-#winner {
-}
 
-#winner.hide {
-}
 
 @-webkit-keyframes slide {
     100% { top: 20px; }

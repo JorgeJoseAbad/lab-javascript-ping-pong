@@ -56,6 +56,7 @@ Game.prototype.updateState=function(){
     if (game.winner !== false) {
       $('#scoreboard').addClass('final');
       $('#winner').html(`<b> And the winner is: ${game.winner}</b>`);
+      
       game.board.stop(this.game);
     }
 
